@@ -1,40 +1,67 @@
-import { Star } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { defineField, defineType } from "sanity";
+import { createRadioListLayout } from "@/utils/helper";
+import { spacingFields } from "@/schemaTypes/common";
 
-import { buttonsField, imageWithAltField } from "@/schemaTypes/common";
-import { customRichText } from "@/schemaTypes/definitions/rich-text";
+const imageFillOptions = ["contain", "cover"];
 
 export const hero = defineType({
   name: "hero",
   title: "Hero",
-  icon: Star,
+  icon: Sparkles,
   type: "object",
+  description:
+    "Hero section featuring a prominent image with configurable layout and spacing controls",
+
   fields: [
     defineField({
-      name: "badge",
-      type: "string",
-      title: "Badge",
+      name: "image",
+      type: "image",
+      title: "Image",
       description:
-        "Optional badge text displayed above the title, useful for highlighting new features or promotions",
+        "Primary hero image used as the main visual focal point of the section",
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        defineField({
+          name: "alt",
+          type: "string",
+          title: "Alt Text",
+          description:
+            "Alternative text describing the image for accessibility and SEO purposes",
+          validation: (rule) => rule.required(),
+        }),
+      ],
+      validation: (rule) => rule.required(),
     }),
+
     defineField({
-      name: "title",
+      name: "imageFill",
       type: "string",
-      title: "Title",
+      title: "Image Fill",
       description:
-        "The main heading text for the hero section that captures attention",
+        "Controls how the image fits within its container. 'cover' fills the space and may crop, while 'contain' shows the full image with possible empty space",
+      initialValue: "cover",
+      options: createRadioListLayout(imageFillOptions, {
+        direction: "horizontal",
+      }),
+      validation: (rule) => rule.required(),
     }),
-    customRichText(["block"]),
-    imageWithAltField(),
-    buttonsField,
+
+    ...spacingFields(
+      "Adjust vertical spacing (top and bottom margins) for the hero section"
+    ),
   ],
+
   preview: {
     select: {
-      title: "title",
+      image: "image",
     },
-    prepare: ({ title }) => ({
-      title,
-      subtitle: "Hero Block",
+    prepare: ({ image }) => ({
+      title: "Hero",
+      subtitle: "Hero section with image and layout controls",
+      media: image,
     }),
   },
 });

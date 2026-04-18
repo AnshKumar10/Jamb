@@ -13,6 +13,22 @@ import {
   getDocumentTypeConfig,
 } from "@/utils/slug-validation";
 
+const spacingOptions = [
+  { title: "None", value: "none" },
+  { title: "Small", value: "sm" },
+  { title: "Medium", value: "md" },
+  { title: "Large", value: "lg" },
+  { title: "Extra Large", value: "xl" },
+  { title: "2X Large", value: "2xl" },
+  { title: "3X Large", value: "3xl" },
+  { title: "4X Large", value: "4xl" },
+];
+
+const spacingModeOptions = [
+  { title: "Same for top and bottom", value: "same" },
+  { title: "Adjust top and bottom separately", value: "separate" },
+];
+
 export const richTextField = defineField({
   name: "richText",
   type: "richText",
@@ -50,7 +66,7 @@ export const documentSlugField = (
     group?: string;
     description?: string;
     title?: string;
-  } = {}
+  } = {},
 ) => {
   const {
     group,
@@ -110,3 +126,79 @@ export const imageWithAltField = ({
       }),
     ],
   });
+
+export const spacingFields = (description?: string) => [
+  defineField({
+    name: "spacingMode",
+    type: "string",
+    title: "Spacing Mode",
+    description: "Choose how to control spacing for this section",
+    initialValue: "same",
+    options: {
+      list: spacingModeOptions,
+      direction: "horizontal",
+    },
+    validation: (rule) => rule.required(),
+  }),
+  defineField({
+    name: "spacing",
+    type: "string",
+    title: "Spacing",
+    description:
+      description || "Vertical margin (top and bottom) for the section",
+    initialValue: "lg",
+    options: {
+      list: spacingOptions,
+      direction: "horizontal",
+    },
+    validation: (rule) =>
+      rule.custom((value, context) => {
+        const parent = context.parent as { spacingMode?: string };
+        if (parent?.spacingMode === "same" && !value) {
+          return "Spacing is required when using same spacing mode.";
+        }
+        return true;
+      }),
+    hidden: ({ parent }) => parent?.spacingMode === "separate",
+  }),
+  defineField({
+    name: "topSpacing",
+    type: "string",
+    title: "Top Spacing",
+    description: "Top margin for the section",
+    initialValue: "lg",
+    options: {
+      list: spacingOptions,
+      direction: "horizontal",
+    },
+    validation: (rule) =>
+      rule.custom((value, context) => {
+        const parent = context.parent as { spacingMode?: string };
+        if (parent?.spacingMode === "separate" && !value) {
+          return "Top spacing is required when using separate spacing mode.";
+        }
+        return true;
+      }),
+    hidden: ({ parent }) => parent?.spacingMode !== "separate",
+  }),
+  defineField({
+    name: "bottomSpacing",
+    type: "string",
+    title: "Bottom Spacing",
+    description: "Bottom margin for the section",
+    initialValue: "lg",
+    options: {
+      list: spacingOptions,
+      direction: "horizontal",
+    },
+    validation: (rule) =>
+      rule.custom((value, context) => {
+        const parent = context.parent as { spacingMode?: string };
+        if (parent?.spacingMode === "separate" && !value) {
+          return "Bottom spacing is required when using separate spacing mode.";
+        }
+        return true;
+      }),
+    hidden: ({ parent }) => parent?.spacingMode !== "separate",
+  }),
+];

@@ -257,39 +257,19 @@ export type Cta = {
 
 export type Hero = {
   _type: "hero";
-  badge?: string;
-  title?: string;
-  richText?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "inline";
-    listItem?: "number" | "bullet";
-    markDefs?: Array<{
-      customLink?: CustomUrl;
-      _type: "customLink";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  image?: {
+  image: {
     asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
+    alt: string;
     _type: "image";
   };
-  buttons?: Array<
-    {
-      _key: string;
-    } & Button
-  >;
+  imageFill: "contain" | "cover";
+  spacingMode: "same" | "separate";
+  spacing?: "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
+  topSpacing?: "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
+  bottomSpacing?: "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
 };
 
 export type PageBuilder = Array<
@@ -1139,39 +1119,10 @@ export type QueryHomePageDataResult = {
     | {
         _key: string;
         _type: "hero";
-        badge?: string;
-        title?: string;
-        richText: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
-          listItem?: "bullet" | "number";
-          markDefs: Array<
-            | {
-                customLink?: CustomUrl;
-                _type: "customLink";
-                _key: string;
-                openInNewTab: boolean | null;
-                href: string | "#" | null;
-              }
-            | {
-                customLink?: CustomUrl;
-                _type: "customLink";
-                _key: string;
-              }
-          > | null;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }> | null;
         image: {
           id: string | null;
           preview: string | null;
-          alt: string | "untitled";
+          alt: string;
           hotspot: {
             x: number;
             y: number;
@@ -1182,15 +1133,22 @@ export type QueryHomePageDataResult = {
             right: number;
             top: number;
           } | null;
-        } | null;
-        buttons: Array<{
-          text: string | null;
-          variant: "default" | "link" | "outline" | "secondary" | null;
-          _key: string;
-          _type: "button";
-          openInNewTab: boolean | null;
-          href: string | null;
-        }> | null;
+        };
+        imageFill: "contain" | "cover";
+        spacingMode: "same" | "separate";
+        spacing?: "2xl" | "3xl" | "4xl" | "lg" | "md" | "none" | "sm" | "xl";
+        topSpacing?: "2xl" | "3xl" | "4xl" | "lg" | "md" | "none" | "sm" | "xl";
+        bottomSpacing?:
+          | "2xl"
+          | "3xl"
+          | "4xl"
+          | "lg"
+          | "md"
+          | "none"
+          | "sm"
+          | "xl";
+        buttons: null;
+        richText: null;
       }
     | {
         _key: string;
@@ -1556,39 +1514,10 @@ export type QuerySlugPageDataResult = {
     | {
         _key: string;
         _type: "hero";
-        badge?: string;
-        title?: string;
-        richText: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
-          listItem?: "bullet" | "number";
-          markDefs: Array<
-            | {
-                customLink?: CustomUrl;
-                _type: "customLink";
-                _key: string;
-                openInNewTab: boolean | null;
-                href: string | "#" | null;
-              }
-            | {
-                customLink?: CustomUrl;
-                _type: "customLink";
-                _key: string;
-              }
-          > | null;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }> | null;
         image: {
           id: string | null;
           preview: string | null;
-          alt: string | "untitled";
+          alt: string;
           hotspot: {
             x: number;
             y: number;
@@ -1599,15 +1528,22 @@ export type QuerySlugPageDataResult = {
             right: number;
             top: number;
           } | null;
-        } | null;
-        buttons: Array<{
-          text: string | null;
-          variant: "default" | "link" | "outline" | "secondary" | null;
-          _key: string;
-          _type: "button";
-          openInNewTab: boolean | null;
-          href: string | null;
-        }> | null;
+        };
+        imageFill: "contain" | "cover";
+        spacingMode: "same" | "separate";
+        spacing?: "2xl" | "3xl" | "4xl" | "lg" | "md" | "none" | "sm" | "xl";
+        topSpacing?: "2xl" | "3xl" | "4xl" | "lg" | "md" | "none" | "sm" | "xl";
+        bottomSpacing?:
+          | "2xl"
+          | "3xl"
+          | "4xl"
+          | "lg"
+          | "md"
+          | "none"
+          | "sm"
+          | "xl";
+        buttons: null;
+        richText: null;
       }
     | {
         _key: string;
@@ -1973,39 +1909,10 @@ export type QueryBlogIndexPageDataResult = {
     | {
         _key: string;
         _type: "hero";
-        badge?: string;
-        title?: string;
-        richText: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
-          listItem?: "bullet" | "number";
-          markDefs: Array<
-            | {
-                customLink?: CustomUrl;
-                _type: "customLink";
-                _key: string;
-                openInNewTab: boolean | null;
-                href: string | "#" | null;
-              }
-            | {
-                customLink?: CustomUrl;
-                _type: "customLink";
-                _key: string;
-              }
-          > | null;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }> | null;
         image: {
           id: string | null;
           preview: string | null;
-          alt: string | "untitled";
+          alt: string;
           hotspot: {
             x: number;
             y: number;
@@ -2016,15 +1923,22 @@ export type QueryBlogIndexPageDataResult = {
             right: number;
             top: number;
           } | null;
-        } | null;
-        buttons: Array<{
-          text: string | null;
-          variant: "default" | "link" | "outline" | "secondary" | null;
-          _key: string;
-          _type: "button";
-          openInNewTab: boolean | null;
-          href: string | null;
-        }> | null;
+        };
+        imageFill: "contain" | "cover";
+        spacingMode: "same" | "separate";
+        spacing?: "2xl" | "3xl" | "4xl" | "lg" | "md" | "none" | "sm" | "xl";
+        topSpacing?: "2xl" | "3xl" | "4xl" | "lg" | "md" | "none" | "sm" | "xl";
+        bottomSpacing?:
+          | "2xl"
+          | "3xl"
+          | "4xl"
+          | "lg"
+          | "md"
+          | "none"
+          | "sm"
+          | "xl";
+        buttons: null;
+        richText: null;
       }
     | {
         _key: string;
