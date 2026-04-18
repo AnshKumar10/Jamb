@@ -1,17 +1,4 @@
-import { cta } from "@/schemaTypes/blocks/cta";
-import { faqAccordion } from "@/schemaTypes/blocks/faq-accordion";
-import { featureCardsIcon } from "@/schemaTypes/blocks/feature-cards-icon";
 import { hero } from "@/schemaTypes/blocks/hero";
-import { imageLinkCards } from "@/schemaTypes/blocks/image-link-cards";
-import { richTextBlock } from "@/schemaTypes/blocks/rich-text";
-import { subscribeNewsletter } from "@/schemaTypes/blocks/subscribe-newsletter";
+import { imageGrid } from "@/schemaTypes/blocks/image-grid";
 
-export const pageBuilderBlocks = [
-  hero,
-  cta,
-  featureCardsIcon,
-  faqAccordion,
-  imageLinkCards,
-  richTextBlock,
-  subscribeNewsletter,
-];
+export const pageBuilderBlocks = [hero, imageGrid];

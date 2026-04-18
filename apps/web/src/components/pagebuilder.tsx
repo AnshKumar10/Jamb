@@ -6,13 +6,8 @@ import { createDataAttribute } from "next-sanity";
 import { useCallback, useMemo } from "react";
 
 import type { PageBuilderBlock, PageBuilderBlockTypes } from "@/types";
-import { CTABlock } from "./sections/cta";
-import { FaqAccordion } from "./sections/faq-accordion";
-import { FeatureCardsWithIcon } from "./sections/feature-cards-with-icon";
 import HeroBlock from "./sections/hero";
-import { ImageLinkCards } from "./sections/image-link-cards";
-import { RichTextBlock } from "./sections/rich-text-block";
-import { SubscribeNewsletter } from "./sections/subscribe-newsletter";
+import ImageGrid from "./sections/image-grid";
 
 export type PageBuilderProps = {
   readonly pageBuilder?: PageBuilderBlock[];
@@ -28,13 +23,8 @@ type SanityDataAttributeConfig = {
 
 // Strongly typed component mapping with proper component signatures
 const BLOCK_COMPONENTS = {
-  cta: CTABlock,
-  faqAccordion: FaqAccordion,
   hero: HeroBlock,
-  featureCardsIcon: FeatureCardsWithIcon,
-  subscribeNewsletter: SubscribeNewsletter,
-  imageLinkCards: ImageLinkCards,
-  richTextBlock: RichTextBlock,
+  imageGrid: ImageGrid,
   // biome-ignore lint/suspicious/noExplicitAny: <any is used to allow for dynamic component rendering>
 } as const satisfies Record<PageBuilderBlockTypes, React.ComponentType<any>>;
 
