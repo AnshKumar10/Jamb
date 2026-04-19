@@ -17,7 +17,7 @@ type SplitFeatureSectionImageProps = {
 function getSlugSource(
   navigationSlugField: SplitFeatureSectionProps["navigationSlugField"],
   headline: SplitFeatureSectionProps["headline"],
-  title: SplitFeatureSectionProps["title"],
+  title: SplitFeatureSectionProps["title"]
 ): string {
   const cleanNavigationSlugField = stegaClean(navigationSlugField);
   const cleanHeadline = stegaClean(headline);
@@ -67,8 +67,11 @@ export default function SplitFeatureSection({
   const slugSource = getSlugSource(
     navigationSlugField ?? "title",
     headline,
-    title,
+    title
   );
+
+
+  
 
   return (
     <section
@@ -98,25 +101,33 @@ export default function SplitFeatureSection({
           }
         >
           {headline && (
-            <p className="min-w-0 break-words text-center font-medium text-sm uppercase leading-[25px] will-change-animate lg:text-base">
+            <p
+              className="min-w-0 break-words text-center font-medium text-sm uppercase leading-[25px] will-change-animate lg:text-base"
+            >
               {headline}
             </p>
           )}
-          <h2 className="mx-auto min-w-0 max-w-[22ch] text-balance break-words text-center font-medium text-3xl leading-[48px] will-change-animate sm:text-2xl lg:text-4xl">
+          <h2
+            className="mx-auto min-w-0 max-w-[22ch] text-balance break-words text-center font-medium text-3xl leading-[48px] will-change-animate sm:text-2xl lg:text-4xl"
+          >
             {title}
           </h2>
-          <p className="mx-auto min-w-0 max-w-[47ch] break-words font-medium text-sm leading-[25px] will-change-animate lg:text-base">
+          <p
+            className="mx-auto min-w-0 max-w-[47ch] break-words font-medium text-sm leading-[25px] will-change-animate lg:text-base"
+          >
             {description}
           </p>
           {buttons && buttons.length > 0 && (
-            <div className="mx-auto mt-3 flex w-fit gap-2 will-change-animate">
+            <div
+              className="mx-auto mt-3 flex w-fit gap-2 will-change-animate"
+            >
               <SanityButtons
                 buttonClassName="border-[#737373]  text-[#737373] w-fit hover:bg-muted/50"
                 buttons={buttons}
                 className={cn(
                   cleanCTALayout === "column" &&
                     "flex flex-col items-center justify-center gap-2 sm:flex-col",
-                  cleanCTALayout === "row" && "flex flex-row gap-2 sm:flex-row",
+                  cleanCTALayout === "row" && "flex flex-row gap-2 sm:flex-row"
                 )}
               />
             </div>
@@ -150,7 +161,7 @@ function SplitFeatureSectionImage({
   const className = cn(
     "h-auto max-h-[731px] w-full",
     imageFill === "contain" && "object-contain",
-    imageFill === "cover" && "object-cover",
+    imageFill === "cover" && "object-cover"
   );
 
   return (

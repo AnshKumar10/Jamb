@@ -1,44 +1,8 @@
 import { CogIcon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
-const socialLinks = defineField({
-  name: "socialLinks",
-  title: "Social Media Links",
-  description: "Add links to your social media profiles",
-  type: "object",
-  fields: [
-    defineField({
-      name: "linkedin",
-      title: "LinkedIn URL",
-      description: "Full URL to your LinkedIn profile/company page",
-      type: "string",
-    }),
-    defineField({
-      name: "facebook",
-      title: "Facebook URL",
-      description: "Full URL to your Facebook profile/page",
-      type: "string",
-    }),
-    defineField({
-      name: "twitter",
-      title: "Twitter/X URL",
-      description: "Full URL to your Twitter/X profile",
-      type: "string",
-    }),
-    defineField({
-      name: "instagram",
-      title: "Instagram URL",
-      description: "Full URL to your Instagram profile",
-      type: "string",
-    }),
-    defineField({
-      name: "youtube",
-      title: "YouTube URL",
-      description: "Full URL to your YouTube channel",
-      type: "string",
-    }),
-  ],
-});
+const MIN_DESCRIPTION_LENGTH = 50;
+const MAX_DESCRIPTION_LENGTH = 160;
 
 export const settings = defineType({
   name: "settings",
@@ -68,7 +32,7 @@ export const settings = defineType({
       type: "text",
       title: "Site Description",
       description: "A brief description of your website for SEO purposes",
-      validation: (rule) => rule.required().min(50).max(160),
+      validation: (rule) => rule.required().min(MIN_DESCRIPTION_LENGTH).max(MAX_DESCRIPTION_LENGTH),
     }),
     defineField({
       name: "logo",
@@ -86,7 +50,6 @@ export const settings = defineType({
       description: "Primary contact email address for your website",
       validation: (rule) => rule.email(),
     }),
-    socialLinks,
   ],
   preview: {
     select: {

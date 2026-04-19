@@ -43,7 +43,7 @@ export function SanityButtons({
   className,
   buttonClassName,
   size = "default",
-}: SanityButtonsProps) { 
+}: SanityButtonsProps) {
   if (!buttons?.length) {
     return null;
   }
