@@ -39,6 +39,39 @@ export type FeatureImage = {
   _type: "image";
 };
 
+export type SplitFeatureSection = {
+  _type: "splitFeatureSection";
+  headline?: string;
+  title: string;
+  description: string;
+  backgroundColor: "transparent" | "#DFDAD7" | "custom";
+  customBackgroundColor?: string;
+  image: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  imageFill: "contain" | "cover";
+  desktopLayoutDirection: "row" | "row-reverse";
+  mobileLayoutDirection: "column" | "column-reverse";
+  buttons?: Array<
+    {
+      _key: string;
+    } & Button
+  >;
+  ctaLayout?: "column" | "row";
+  padding: "default" | "large";
+  spacingMode: "same" | "separate";
+  spacing?: "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
+  topSpacing?: "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
+  bottomSpacing?: "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
+  allowNavigation?: boolean;
+  navigationSlugField?: "title" | "headline";
+};
+
 export type ImageGrid = {
   _type: "imageGrid";
   title?: string;
@@ -85,6 +118,9 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & ImageGrid)
+  | ({
+      _key: string;
+    } & SplitFeatureSection)
 >;
 
 export type Button = {
@@ -668,6 +704,7 @@ export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | SeoImage
   | FeatureImage
+  | SplitFeatureSection
   | ImageGrid
   | Hero
   | PageBuilder
@@ -811,6 +848,47 @@ export type QueryHomePageDataResult = {
           | "xl";
         allowNavigation?: boolean;
       }
+    | {
+        _key: string;
+        _type: "splitFeatureSection";
+        headline?: string;
+        title: string;
+        description: string;
+        backgroundColor: "#DFDAD7" | "custom" | "transparent";
+        customBackgroundColor?: string;
+        image: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt: string;
+          _type: "image";
+        };
+        imageFill: "contain" | "cover";
+        desktopLayoutDirection: "row-reverse" | "row";
+        mobileLayoutDirection: "column-reverse" | "column";
+        buttons?: Array<
+          {
+            _key: string;
+          } & Button
+        >;
+        ctaLayout?: "column" | "row";
+        padding: "default" | "large";
+        spacingMode: "same" | "separate";
+        spacing?: "2xl" | "3xl" | "4xl" | "lg" | "md" | "none" | "sm" | "xl";
+        topSpacing?: "2xl" | "3xl" | "4xl" | "lg" | "md" | "none" | "sm" | "xl";
+        bottomSpacing?:
+          | "2xl"
+          | "3xl"
+          | "4xl"
+          | "lg"
+          | "md"
+          | "none"
+          | "sm"
+          | "xl";
+        allowNavigation?: boolean;
+        navigationSlugField?: "headline" | "title";
+      }
   > | null;
   seoTitle?: string;
   seoDescription?: string;
@@ -904,6 +982,47 @@ export type QuerySlugPageDataResult = {
           | "xl";
         allowNavigation?: boolean;
       }
+    | {
+        _key: string;
+        _type: "splitFeatureSection";
+        headline?: string;
+        title: string;
+        description: string;
+        backgroundColor: "#DFDAD7" | "custom" | "transparent";
+        customBackgroundColor?: string;
+        image: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt: string;
+          _type: "image";
+        };
+        imageFill: "contain" | "cover";
+        desktopLayoutDirection: "row-reverse" | "row";
+        mobileLayoutDirection: "column-reverse" | "column";
+        buttons?: Array<
+          {
+            _key: string;
+          } & Button
+        >;
+        ctaLayout?: "column" | "row";
+        padding: "default" | "large";
+        spacingMode: "same" | "separate";
+        spacing?: "2xl" | "3xl" | "4xl" | "lg" | "md" | "none" | "sm" | "xl";
+        topSpacing?: "2xl" | "3xl" | "4xl" | "lg" | "md" | "none" | "sm" | "xl";
+        bottomSpacing?:
+          | "2xl"
+          | "3xl"
+          | "4xl"
+          | "lg"
+          | "md"
+          | "none"
+          | "sm"
+          | "xl";
+        allowNavigation?: boolean;
+        navigationSlugField?: "headline" | "title";
+      }
   > | null;
   seoTitle?: string;
   seoDescription?: string;
@@ -996,6 +1115,47 @@ export type QueryBlogIndexPageDataResult = {
           | "sm"
           | "xl";
         allowNavigation?: boolean;
+      }
+    | {
+        _key: string;
+        _type: "splitFeatureSection";
+        headline?: string;
+        title: string;
+        description: string;
+        backgroundColor: "#DFDAD7" | "custom" | "transparent";
+        customBackgroundColor?: string;
+        image: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt: string;
+          _type: "image";
+        };
+        imageFill: "contain" | "cover";
+        desktopLayoutDirection: "row-reverse" | "row";
+        mobileLayoutDirection: "column-reverse" | "column";
+        buttons?: Array<
+          {
+            _key: string;
+          } & Button
+        >;
+        ctaLayout?: "column" | "row";
+        padding: "default" | "large";
+        spacingMode: "same" | "separate";
+        spacing?: "2xl" | "3xl" | "4xl" | "lg" | "md" | "none" | "sm" | "xl";
+        topSpacing?: "2xl" | "3xl" | "4xl" | "lg" | "md" | "none" | "sm" | "xl";
+        bottomSpacing?:
+          | "2xl"
+          | "3xl"
+          | "4xl"
+          | "lg"
+          | "md"
+          | "none"
+          | "sm"
+          | "xl";
+        allowNavigation?: boolean;
+        navigationSlugField?: "headline" | "title";
       }
   > | null;
   seoTitle?: string;

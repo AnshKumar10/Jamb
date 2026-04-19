@@ -8,6 +8,7 @@ import { useCallback, useMemo } from "react";
 import type { PageBuilderBlock, PageBuilderBlockTypes } from "@/types";
 import HeroBlock from "./sections/hero";
 import ImageGrid from "./sections/image-grid";
+import SplitFeatureSection from "./sections/split-feature-section";
 
 export type PageBuilderProps = {
   readonly pageBuilder?: PageBuilderBlock[];
@@ -24,6 +25,7 @@ type SanityDataAttributeConfig = {
 // Strongly typed component mapping with proper component signatures
 const BLOCK_COMPONENTS = {
   hero: HeroBlock,
+  splitFeatureSection: SplitFeatureSection,
   imageGrid: ImageGrid,
   // biome-ignore lint/suspicious/noExplicitAny: <any is used to allow for dynamic component rendering>
 } as const satisfies Record<PageBuilderBlockTypes, React.ComponentType<any>>;

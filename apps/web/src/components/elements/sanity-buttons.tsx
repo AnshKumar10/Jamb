@@ -25,12 +25,7 @@ function SanityButton({
   }
 
   return (
-    <Button
-      variant={variant}
-      {...props}
-      asChild
-      className={cn("rounded-[10px]", className)}
-    >
+    <Button variant={variant} {...props} asChild className={cn(className)}>
       <Link
         aria-label={`Navigate to ${text}`}
         href={href || "#"}
@@ -48,7 +43,7 @@ export function SanityButtons({
   className,
   buttonClassName,
   size = "default",
-}: SanityButtonsProps) {
+}: SanityButtonsProps) { 
   if (!buttons?.length) {
     return null;
   }
