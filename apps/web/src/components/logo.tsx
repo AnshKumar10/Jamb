@@ -29,7 +29,7 @@ export function Logo({
       {image ? (
         <SanityImage
           alt={alt ?? "logo"}
-          className="w-[170px] dark:invert"
+          className="w-[170px]"
           // width={width}
           // height={height}
           decoding="sync"

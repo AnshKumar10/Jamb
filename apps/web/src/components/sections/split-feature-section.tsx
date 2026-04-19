@@ -6,7 +6,7 @@ import { SanityButtons } from "@/components/elements/sanity-buttons";
 import { SanityImage } from "@/components/elements/sanity-image";
 import type { PagebuilderType } from "@/types";
 import { convertToSlug } from "@/utils";
-import { getSpacingStyles } from "@/spacing";
+import { getSpacingStyles } from "@/utils/spacing";
 
 type SplitFeatureSectionProps = PagebuilderType<"splitFeatureSection">;
 type SplitFeatureSectionImageProps = {

@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@workspace/ui/components/button";
-import { cn } from "@workspace/ui/lib/utils";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { Logo } from "@/components/logo";
@@ -47,27 +46,16 @@ export function Navbar({
   navbarData: null;
   settingsData: QueryGlobalSeoSettingsResult;
 }) {
-  const SCROLL_THRESHOLD = 200;
-  const [isVisible, setIsVisible] = useState(true);
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentPosition = window.scrollY;
-      if (currentPosition < SCROLL_THRESHOLD) {
-        setIsVisible(true);
-      } else if (currentPosition < scrollPosition) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-
-      setScrollPosition(currentPosition);
+      setScrolled(window.scrollY > 10);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [scrollPosition]);
+  }, []);
 
   const { data, error, isLoading } = useSWR<NavigationData>(
     "/api/navigation",
@@ -90,6 +78,7 @@ export function Navbar({
     navbarData: initialNavbarData,
     settingsData: initialSettingsData,
   };
+
   const { settingsData } = navigationData;
   const { logo, siteTitle } = settingsData || {};
 
@@ -98,7 +87,13 @@ export function Navbar({
   }
 
   return (
-    <header className="sticky top-0 z-9999999 w-full">
+    <header
+      className={`sticky top-0 z-9999999 w-full transition-all duration-300 ${
+        scrolled
+          ? "backdrop-blur-xl bg-white/50"
+          : "bg-transparent"
+      }`}
+    >
       <div className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
           <div className="flex aspect-[2.4] w-[90px] items-center sm:w-[108px]">
@@ -144,7 +139,7 @@ export function Navbar({
               </svg>
             </Button>
 
-            <Button aria-label="Hamburger Menu" size="icon" variant="ghost">
+            <Button aria-label="Mail Icon" size="icon" variant="ghost">
               <svg
                 aria-label="Mail Icon"
                 className="size-6 sm:size-7"
@@ -194,7 +189,7 @@ export function Navbar({
                 <line
                   stroke="#9C9C9D"
                   strokeWidth="1.5"
-                  x1="6.10352e-05"
+                  x1="0"
                   x2="31.0176"
                   y1="11.4868"
                   y2="11.4868"
@@ -202,7 +197,7 @@ export function Navbar({
                 <line
                   stroke="#9C9C9D"
                   strokeWidth="1.5"
-                  x1="6.10352e-05"
+                  x1="0"
                   x2="31.0176"
                   y1="22.2236"
                   y2="22.2236"
@@ -213,7 +208,6 @@ export function Navbar({
         </div>
       </div>
 
-      {/* Error boundary for SWR */}
       {error && process.env.NODE_ENV === "development" && (
         <div className="border-destructive/20 border-b bg-destructive/10 px-4 py-2 text-destructive text-xs">
           Navigation data fetch error: {error.message}

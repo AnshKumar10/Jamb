@@ -4,11 +4,15 @@ import { useOptimistic } from "@sanity/visual-editing/react";
 import { env } from "@workspace/env/client";
 import { createDataAttribute } from "next-sanity";
 import { useCallback, useMemo } from "react";
+import Hero from "@/components/sections/hero";
+import ImageGrid from "@/components/sections/image-grid";
+import SplitFeatureSection from "@/components/sections/split-feature-section";
+import type { PageBuilderBlockTypes, PagebuilderType } from "@/types";
+import { QueryHomePageDataResult } from "@workspace/sanity/types";
 
-import type { PageBuilderBlock, PageBuilderBlockTypes } from "@/types";
-import HeroBlock from "./sections/hero";
-import ImageGrid from "./sections/image-grid";
-import SplitFeatureSection from "./sections/split-feature-section";
+export type PageBuilderBlock = NonNullable<
+  NonNullable<QueryHomePageDataResult>["pageBuilder"]
+>[number];
 
 export type PageBuilderProps = {
   readonly pageBuilder?: PageBuilderBlock[];
@@ -22,13 +26,21 @@ type SanityDataAttributeConfig = {
   readonly path: string;
 };
 
-// Strongly typed component mapping with proper component signatures
+type BlockComponentsMap = {
+  hero: React.ComponentType<
+    PagebuilderType<"hero"> & { allBlocks: PageBuilderBlock[] }
+  >;
+} & {
+  [K in Exclude<PageBuilderBlockTypes, "hero">]: React.ComponentType<
+    PagebuilderType<K>
+  >;
+};
+
 const BLOCK_COMPONENTS = {
-  hero: HeroBlock,
+  hero: Hero,
   splitFeatureSection: SplitFeatureSection,
   imageGrid: ImageGrid,
-  // biome-ignore lint/suspicious/noExplicitAny: <any is used to allow for dynamic component rendering>
-} as const satisfies Record<PageBuilderBlockTypes, React.ComponentType<any>>;
+} as const satisfies BlockComponentsMap;
 
 /**
  * Helper function to create consistent Sanity data attributes
@@ -78,7 +90,7 @@ function useOptimisticPageBuilder(
   initialBlocks: PageBuilderBlock[],
   documentId: string,
 ) {
-  // biome-ignore lint/suspicious/noExplicitAny: <any is used to allow for dynamic component rendering>
+  // biome-ignore lint/suspicious/noExplicitAny: <any is used to bypass type checking>
   return useOptimistic<PageBuilderBlock[], any>(
     initialBlocks,
     (currentBlocks, action) => {
@@ -93,7 +105,11 @@ function useOptimisticPageBuilder(
 /**
  * Custom hook for block component rendering logic
  */
-function useBlockRenderer(id: string, type: string) {
+function useBlockRenderer(
+  id: string,
+  type: string,
+  blocks: PageBuilderBlock[],
+) {
   const createBlockDataAttribute = useCallback(
     (blockKey: string) =>
       createSanityDataAttribute({
@@ -119,17 +135,29 @@ function useBlockRenderer(id: string, type: string) {
         );
       }
 
+      if (block._type === "hero") {
+        return (
+          <div
+            data-sanity={createBlockDataAttribute(block._key)}
+            key={`${block._type}-${block._key}`}
+          >
+            {/** biome-ignore lint/suspicious/noExplicitAny: <any is used to bypass type checking> */}
+            <Component {...(block as any)} allBlocks={blocks} />
+          </div>
+        );
+      }
+
       return (
         <div
           data-sanity={createBlockDataAttribute(block._key)}
           key={`${block._type}-${block._key}`}
         >
-          {/** biome-ignore lint/suspicious/noExplicitAny: <any is used to allow for dynamic component rendering> */}
+          {/** biome-ignore lint/suspicious/noExplicitAny: <any is used to bypass type checking> */}
           <Component {...(block as any)} />
         </div>
       );
     },
-    [createBlockDataAttribute],
+    [createBlockDataAttribute, blocks],
   );
 
   return { renderBlock };
@@ -144,7 +172,7 @@ export function PageBuilder({
   type,
 }: PageBuilderProps) {
   const blocks = useOptimisticPageBuilder(initialBlocks, id);
-  const { renderBlock } = useBlockRenderer(id, type);
+  const { renderBlock } = useBlockRenderer(id, type, blocks);
 
   const containerDataAttribute = useMemo(
     () => createSanityDataAttribute({ id, type, path: "pageBuilder" }),
@@ -157,7 +185,8 @@ export function PageBuilder({
 
   return (
     <main
-      className="mx-auto my-16 flex max-w-7xl flex-col gap-16"
+      aria-label="Page content"
+      className="mx-auto flex flex-col"
       data-sanity={containerDataAttribute}
     >
       {blocks.map(renderBlock)}

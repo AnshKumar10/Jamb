@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { SanityImage } from "@/components/elements/sanity-image";
 import type { PagebuilderType } from "@/types";
 import { convertToSlug } from "@/utils";
-import { getSpacingStyles } from "@/spacing";
+import { getSpacingStyles } from "@/utils/spacing";
 
 type ImageGridProps = PagebuilderType<"imageGrid">;
 
@@ -70,7 +70,7 @@ export default function ImageGrid({
         <div
           className={cn(
             "grid justify-center gap-8 sm:grid-cols-2 md:grid-cols-3 md:gap-10 lg:grid-cols-4",
-            features?.length >= MAX_GRID_COLS && "xl:grid-cols-5"
+            features?.length >= MAX_GRID_COLS && "xl:grid-cols-5",
           )}
         >
           {features?.map((feature, index) => {
@@ -93,7 +93,7 @@ export default function ImageGrid({
                     <h4
                       className={cn(
                         "mt-2.5 w-full min-w-0 break-words font-bold text-base leading-[25px]",
-                        feature?.truncateTitle && "line-clamp-2"
+                        feature?.truncateTitle && "line-clamp-2",
                       )}
                     >
                       {feature.title}
@@ -137,9 +137,7 @@ function DescriptionWithReadMore({
   }
 
   const truncatedText = cleanDescription.slice(0, maxLength).trim();
-  const displayText = isExpanded
-    ? cleanDescription
-    : `${truncatedText}...`;
+  const displayText = isExpanded ? cleanDescription : `${truncatedText}...`;
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-1">
@@ -168,9 +166,9 @@ function FeatureImage({ image, imageFill }: FeatureImageProps) {
     <SanityImage
       alt={image.alt || ""}
       className={cn(
-        "h-full w-full",
+        "aspect-square w-full object-cover",
         cleanImageFill === "contain" && "object-contain",
-        cleanImageFill === "cover" && "object-cover"
+        cleanImageFill === "cover" && "object-cover",
       )}
       height={300}
       image={image}

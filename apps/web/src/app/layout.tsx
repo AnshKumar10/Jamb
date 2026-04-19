@@ -1,4 +1,4 @@
-import "@workspace/ui/globals.css"
+import "@workspace/ui/globals.css";
 
 import localFont from "next/font/local";
 import { draftMode } from "next/headers";
@@ -8,6 +8,10 @@ import { CombinedJsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { PreviewBar } from "@/components/preview-bar";
 import { getNavigationData } from "@/lib/navigation";
+import { Suspense } from "react";
+import { SanityLive } from "@workspace/sanity/live";
+import { Footer } from "@/components/footer";
+import FooterSkeleton from "@/components/footer-skeleton";
 
 const fontGalaxieCopernicus = localFont({
   variable: "--font-galaxie-copernicus",
@@ -40,8 +44,10 @@ export default async function RootLayout({
       <body className={`${fontGalaxieCopernicus.variable} antialiased`}>
         <Navbar navbarData={null} settingsData={nav.settingsData} />
         {children}
-       
-       
+        <Suspense fallback={<FooterSkeleton />}>
+          <Footer />
+        </Suspense>
+        <SanityLive />
         <CombinedJsonLd includeOrganization includeWebsite />
         {(await draftMode()).isEnabled && (
           <>
