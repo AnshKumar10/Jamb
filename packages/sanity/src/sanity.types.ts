@@ -335,6 +335,7 @@ export type Page = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
+    alt?: string;
     _type: "image";
   };
   pageBuilder?: PageBuilder;
@@ -817,6 +818,7 @@ export type QuerySlugPageDataResult = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
+    alt?: string;
     _type: "image";
   };
   pageBuilder: Array<

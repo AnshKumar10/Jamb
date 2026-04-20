@@ -58,9 +58,9 @@ export default function Hero({
             />
           </div>
           {navigationLinks.length > 0 && (
-            <div className="mt-3 flex w-full flex-wrap items-center justify-center gap-4">
+            <div className="mt-3 flex w-full flex-wrap items-center justify-center gap-2">
               {navigationLinks.map((link, index) => (
-                <div className="flex items-center gap-4 will-change-animate">
+                <div key={link.label} className="flex items-center gap-2">
                   <Link
                     className={buttonVariants({
                       variant: "link",

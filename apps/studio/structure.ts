@@ -1,22 +1,14 @@
-import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 import {
-  BookMarked,
   CogIcon,
   File,
-  FileText,
   HomeIcon,
   type LucideIcon,
-  MessageCircle,
   PanelBottom,
   PanelBottomIcon,
   Settings2,
   TrendingUpDown,
-  User,
 } from "lucide-react";
-import type {
-  StructureBuilder,
-  StructureResolverContext,
-} from "sanity/structure";
+import type { StructureBuilder } from "sanity/structure";
 
 import { createSlugBasedStructure } from "@/components/nested-pages-structure";
 import type { SchemaType, SingletonType } from "@/schemaTypes/index";
@@ -59,71 +51,13 @@ const createList = ({ S, type, icon, title, id }: CreateList) => {
     .icon(icon ?? File);
 };
 
-type CreateIndexList = {
-  S: StructureBuilder;
-  list: Base;
-  index: Base<SingletonType>;
-  context: StructureResolverContext;
-};
-
-const createIndexListWithOrderableItems = ({
-  S,
-  index,
-  list,
-  context,
-}: CreateIndexList) => {
-  const indexTitle = index.title ?? getTitleCase(index.type);
-  const listTitle = list.title ?? getTitleCase(list.type);
-  return S.listItem()
-    .title(listTitle)
-    .icon(index.icon ?? File)
-    .child(
-      S.list()
-        .title(indexTitle)
-        .items([
-          S.listItem()
-            .title(indexTitle)
-            .icon(index.icon ?? File)
-            .child(
-              S.document()
-                .views([S.view.form()])
-                .schemaType(index.type)
-                .documentId(index.type)
-            ),
-          orderableDocumentListDeskItem({
-            type: list.type,
-            S,
-            context,
-            icon: list.icon ?? File,
-            title: `${listTitle}`,
-          }),
-        ])
-    );
-};
-
-export const structure = (
-  S: StructureBuilder,
-  context: StructureResolverContext
-) =>
+export const structure = (S: StructureBuilder) =>
   S.list()
     .title("Content")
     .items([
       createSingleTon({ S, type: "homePage", icon: HomeIcon }),
       S.divider(),
       createSlugBasedStructure(S, "page"),
-      createIndexListWithOrderableItems({
-        S,
-        index: { type: "blogIndex", icon: BookMarked },
-        list: { type: "blog", title: "Blogs", icon: FileText },
-        context,
-      }),
-      createList({
-        S,
-        type: "faq",
-        title: "FAQs",
-        icon: MessageCircle,
-      }),
-      createList({ S, type: "author", title: "Authors", icon: User }),
       createList({
         S,
         type: "redirect",

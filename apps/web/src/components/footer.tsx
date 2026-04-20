@@ -6,7 +6,6 @@ import { Input } from "@workspace/ui/components/input";
 import Link from "next/link";
 import FooterSkeleton from "./footer-skeleton";
 
-
 export async function Footer() {
   const { data: footerData } = await sanityFetch({
     query: queryFooterData,
@@ -19,7 +18,7 @@ export async function Footer() {
   return (
     <footer className="mt-56 bg-muted">
       <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 gap-8 pb-12 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           <div className="space-y-1 font-medium text-accent text-base leading-[25px]">
             <p>Tel: {footerData.contactInfo?.phone}</p>
             <p>{footerData.contactInfo?.addressLine1}</p>
@@ -29,11 +28,8 @@ export async function Footer() {
           <div className="font-medium text-accent text-base leading-[25px]">
             <p>{footerData.contactInfo?.email}</p>
           </div>
-
-          <div className="lg:col-span-1">
-            <h3 className="mb-4 text-accent text-sm">
-              {footerData.newsletter?.title}
-            </h3>
+          <div className="w-full lg:col-start-3 lg:col-span-2 xl:col-start-4 xl:col-span-2">
+            <h3 className="mb-4 text-accent">{footerData.newsletter?.title}</h3>
             <div className="flex gap-2">
               <Input
                 className="border-accent bg-background placeholder:text-accent"
@@ -43,6 +39,7 @@ export async function Footer() {
                 }
                 type="email"
               />
+
               <Button
                 className="whitespace-nowrap border-accent bg-transparent text-accent hover:bg-foreground/5 hover:text-foreground"
                 variant="outline"
@@ -51,9 +48,12 @@ export async function Footer() {
               </Button>
             </div>
             <div className="mt-3 flex items-center gap-2">
-              <Checkbox className="border-accent" id="privacy" />
+              <Checkbox
+                className="cursor-pointer rounded-[100%] border-accent"
+                id="privacy"
+              />
               <label
-                className="cursor-pointer text-accent text-xs"
+                className="cursor-pointer text-accent text-sm"
                 htmlFor="privacy"
               >
                 {footerData?.newsletter?.privacyText ?? "I agree"}

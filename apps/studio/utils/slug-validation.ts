@@ -33,6 +33,8 @@ export type SlugValidationOptions = {
 const SEGMENT_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const MIN_LEN = 3;
 const MAX_LEN = 60;
+const FORBIDDEN_ADMIN_PATTERN = /^\/admin/;
+const FORBIDDEN_API_PATTERN = /^\/api/;
 
 export const SLUG_ERROR_MESSAGES = {
   REQUIRED: "Slug must have a value",
@@ -55,47 +57,41 @@ export const SLUG_WARNING_MESSAGES = {
 // --- Document type configs ---
 
 const CONFIGS: Record<string, SlugValidationOptions> = {
-  blog: {
-    documentType: "Blog post",
-    requiredPrefix: "/blog/",
-    requireSlash: true,
-    segmentCount: 2,
-    sanityDocumentType: "blog",
-  },
-  blogIndex: {
-    documentType: "Blog index",
-    requireSlash: true,
-    sanityDocumentType: "blogIndex",
-    customValidators: [
-      (s) => (s !== "/blog" ? ["Blog index must be exactly '/blog'"] : []),
-    ],
-  },
-  homePage: {
+   homePage: {
     documentType: "Home page",
-    requireSlash: true,
     sanityDocumentType: "homePage",
+    requiredPrefix: "/",
+    requireSlash: true,
+    segmentCount: 0,
     customValidators: [
-      (s) => (s !== "/" ? ["Home page must be exactly '/'"] : []),
+      (slug: string) => {
+        if (slug !== "/") {
+          return ["Home page must be exactly '/'"];
+        }
+        return [];
+      },
     ],
   },
   page: {
     documentType: "Page",
     requireSlash: true,
     sanityDocumentType: "page",
+    forbiddenPatterns: [
+      FORBIDDEN_ADMIN_PATTERN,
+      FORBIDDEN_API_PATTERN,
+    ],
     customValidators: [
-      (slug) => {
-        const reserved = [
-          ["/blog", "blog content"],
-          ["/author", "authors"],
-          ["/admin", "admin"],
-          ["/api", "API routes"],
-        ] as const;
-        return reserved
-          .filter(([prefix]) => slug.startsWith(prefix))
-          .map(
-            ([prefix, label]) =>
-              `Pages cannot use "${prefix}" prefix - reserved for ${label}`
+      (slug: string) => {
+        const errors: string[] = [];
+        if (slug.startsWith("/admin")) {
+          errors.push('Pages cannot use "/admin" prefix - reserved for admin');
+        }
+        if (slug.startsWith("/api")) {
+          errors.push(
+            'Pages cannot use "/api" prefix - reserved for API routes'
           );
+        }
+        return errors;
       },
     ],
   },

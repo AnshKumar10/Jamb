@@ -89,8 +89,8 @@ export function Navbar({
   return (
     <header
       className={`sticky top-0 z-9999999 w-full transition-all duration-300 ${
-        scrolled
-          ? "backdrop-blur-xl bg-white/50"
+      scrolled
+          ? "bg-[#F3F0ED]"
           : "bg-transparent"
       }`}
     >

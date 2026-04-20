@@ -60,9 +60,9 @@ export default function ImageGrid({
         }),
       }}
     >
-      <div className="container mx-auto space-y-12 px-4 sm:space-y-14 sm:px-6 lg:space-y-16 lg:px-8">
+      <div className="container mx-auto space-y-4 px-4 sm:space-y-8 sm:px-6 lg:space-y-12 lg:px-8">
         {cleanTitle && (
-          <h3 className="text-balance text-center font-medium text-2xl capitalize leading-[25px]">
+          <h3 className="text-balance mb-8 text-center font-medium text-2xl capitalize leading-[25px]">
             {cleanTitle}
           </h3>
         )}
@@ -92,7 +92,7 @@ export default function ImageGrid({
                   {feature?.title && (
                     <h4
                       className={cn(
-                        "mt-2.5 w-full min-w-0 break-words font-bold text-base leading-[25px]",
+                        "mt-2.5 w-full text-[#737373] min-w-0 break-words font-bold text-base leading-[25px]",
                         feature?.truncateTitle && "line-clamp-2",
                       )}
                     >
@@ -132,7 +132,7 @@ function DescriptionWithReadMore({
 
   if (cleanDescription.length <= maxLength) {
     return (
-      <p className="flex-1 text-base leading-[25px]">{cleanDescription}</p>
+      <p className="flex-1 text-[#737373] text-base leading-[25px]">{cleanDescription}</p>
     );
   }
 
