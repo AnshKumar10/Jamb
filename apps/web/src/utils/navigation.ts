@@ -1,6 +1,6 @@
 import { stegaClean } from "next-sanity";
 import { convertToSlug } from "@/utils";
-import { PageBuilderBlock } from "@/types";
+import { PageBuilderBlock } from "@/components/pagebuilder";
 
 export type NavigationLink = {
   label: string;

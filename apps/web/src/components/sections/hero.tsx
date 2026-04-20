@@ -2,10 +2,11 @@ import { buttonVariants } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
 import Link from "next/link";
 import { stegaClean } from "next-sanity";
-import { PageBuilderBlock, PagebuilderType } from "@/types";
+import {  PagebuilderType } from "@/types";
 import { getSpacingStyles } from "@/utils/spacing";
 import { SanityImage } from "@/components/elements/sanity-image";
 import { generateNavigationLinks } from "@/utils/navigation";
+import { PageBuilderBlock } from "../pagebuilder";
 
 type HeroProps = PagebuilderType<"hero"> & {
   allBlocks: PageBuilderBlock[];

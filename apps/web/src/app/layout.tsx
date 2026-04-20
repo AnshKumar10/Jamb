@@ -4,7 +4,6 @@ import localFont from "next/font/local";
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { preconnect } from "react-dom";
-import { CombinedJsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { PreviewBar } from "@/components/preview-bar";
 import { getNavigationData } from "@/lib/navigation";
@@ -48,7 +47,6 @@ export default async function RootLayout({
           <Footer />
         </Suspense>
         <SanityLive />
-        <CombinedJsonLd includeOrganization includeWebsite />
         {(await draftMode()).isEnabled && (
           <>
             <PreviewBar />

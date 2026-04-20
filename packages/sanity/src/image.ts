@@ -102,7 +102,7 @@ export function processImageData(
 
   return {
     id: image.id,
-    alt: image.alt,
+    alt: image.id,
     ...(preview && { preview }),
     ...(hotspot && { hotspot }),
     ...(crop && { crop }),
