@@ -4,6 +4,7 @@ import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
 import { stegaClean } from "next-sanity";
 import { useEffect, useState } from "react";
+import { motion, Variants } from "framer-motion";
 import { SanityImage } from "@/components/elements/sanity-image";
 import type { PagebuilderType } from "@/types";
 import { convertToSlug } from "@/utils";
@@ -19,6 +20,52 @@ type DescriptionWithReadMoreProps = {
 type FeatureImageProps = {
   image: ImageGridProps["features"][0]["image"];
   imageFill: ImageGridProps["features"][0]["imageFill"];
+};
+
+const easing = [0.25, 0.1, 0.25, 1] as [number, number, number, number];
+
+const container: Variants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const item: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 18,
+    scale: 0.98,
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.85,
+      ease: easing,
+    },
+  },
+};
+
+const imageReveal: Variants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.96,
+    filter: "blur(8px)",
+  },
+  show: {
+    opacity: 1,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: {
+      duration: 1.05,
+      ease: easing,
+    },
+  },
 };
 
 export default function ImageGrid({
@@ -62,12 +109,22 @@ export default function ImageGrid({
     >
       <div className="container mx-auto space-y-4 px-4 sm:space-y-8 sm:px-6 lg:space-y-12 lg:px-8">
         {cleanTitle && (
-          <h3 className="text-balance mb-8 text-center font-medium text-2xl capitalize leading-[25px]">
+          <motion.h3
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="text-balance mb-8 text-center font-medium text-2xl capitalize leading-[25px]"
+          >
             {cleanTitle}
-          </h3>
+          </motion.h3>
         )}
 
-        <div
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.25 }}
           className={cn(
             "grid justify-center gap-8 sm:grid-cols-2 md:grid-cols-3 md:gap-10 lg:grid-cols-4",
             features?.length >= MAX_GRID_COLS && "xl:grid-cols-5",
@@ -77,16 +134,20 @@ export default function ImageGrid({
             const key = feature?._key || index;
 
             return (
-              <div
+              <motion.div
                 key={key}
+                variants={item}
                 className="flex min-w-0 flex-col items-center justify-start gap-4 text-center"
               >
-                <div className="aspect-square w-full shrink-0">
+                <motion.div
+                  variants={imageReveal}
+                  className="aspect-square w-full shrink-0"
+                >
                   <FeatureImage
                     image={feature?.image}
                     imageFill={feature?.imageFill}
                   />
-                </div>
+                </motion.div>
 
                 <div className="flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-1">
                   {feature?.title && (
@@ -107,10 +168,10 @@ export default function ImageGrid({
                     />
                   )}
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -132,7 +193,9 @@ function DescriptionWithReadMore({
 
   if (cleanDescription.length <= maxLength) {
     return (
-      <p className="flex-1 text-[#737373] text-base leading-[25px]">{cleanDescription}</p>
+      <p className="flex-1 text-[#737373] text-base leading-[25px]">
+        {cleanDescription}
+      </p>
     );
   }
 

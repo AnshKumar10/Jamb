@@ -2,6 +2,8 @@
 
 import { cn } from "@workspace/ui/lib/utils";
 import { stegaClean } from "next-sanity";
+import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 import { SanityButtons } from "@/components/elements/sanity-buttons";
 import { SanityImage } from "@/components/elements/sanity-image";
 import type { PagebuilderType } from "@/types";
@@ -14,10 +16,56 @@ type SplitFeatureSectionImageProps = {
   imageFill: SplitFeatureSectionProps["imageFill"];
 };
 
+const easing: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+
+const container: Variants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.18,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const item: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 28,
+    filter: "blur(6px)",
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.9,
+      ease: easing,
+    },
+  },
+};
+
+const imageVariant: Variants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.96,
+    filter: "blur(10px)",
+  },
+  show: {
+    opacity: 1,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: {
+      duration: 1.2,
+      ease: easing,
+    },
+  },
+};
+
 function getSlugSource(
   navigationSlugField: SplitFeatureSectionProps["navigationSlugField"],
   headline: SplitFeatureSectionProps["headline"],
-  title: SplitFeatureSectionProps["title"]
+  title: SplitFeatureSectionProps["title"],
 ): string {
   const cleanNavigationSlugField = stegaClean(navigationSlugField);
   const cleanHeadline = stegaClean(headline);
@@ -50,7 +98,6 @@ export default function SplitFeatureSection({
   const cleanBackgroundColor = stegaClean(backgroundColor);
   const cleanDesktopLayoutDirection = stegaClean(desktopLayoutDirection);
   const cleanMobileLayoutDirection = stegaClean(mobileLayoutDirection);
-
   const cleanCTALayout = stegaClean(ctaLayout);
   const cleanImageFill = stegaClean(imageFill);
   const cleanSpacingMode = stegaClean(spacingMode);
@@ -67,11 +114,8 @@ export default function SplitFeatureSection({
   const slugSource = getSlugSource(
     navigationSlugField ?? "title",
     headline,
-    title
+    title,
   );
-
-
-  
 
   return (
     <section
@@ -87,11 +131,15 @@ export default function SplitFeatureSection({
         }),
       }}
     >
-      <div
+      <motion.div
         className="container mx-auto grid gap-10 px-4 sm:gap-12 md:grid-cols-2 md:gap-14 lg:gap-16"
         style={{ "--max-w": "1336px" } as React.CSSProperties}
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.25 }}
       >
-        <div
+        <motion.div
           className="order-(--order-mobile) flex min-w-0 flex-col justify-center gap-4 will-change-animate sm:gap-5 md:order-(--order-desktop)"
           style={
             {
@@ -101,24 +149,31 @@ export default function SplitFeatureSection({
           }
         >
           {headline && (
-            <p
+            <motion.p
+              variants={item}
               className="min-w-0 break-words text-center font-medium text-sm uppercase leading-[25px] will-change-animate lg:text-base"
             >
               {headline}
-            </p>
+            </motion.p>
           )}
-          <h2
+
+          <motion.h2
+            variants={item}
             className="mx-auto min-w-0 max-w-[22ch] text-balance break-words text-center font-medium text-3xl leading-[48px] will-change-animate sm:text-2xl lg:text-4xl"
           >
             {title}
-          </h2>
-          <p
+          </motion.h2>
+
+          <motion.p
+            variants={item}
             className="mx-auto min-w-0 max-w-[47ch] break-words font-medium text-sm leading-[25px] will-change-animate lg:text-base"
           >
             {description}
-          </p>
+          </motion.p>
+
           {buttons && buttons.length > 0 && (
-            <div
+            <motion.div
+              variants={item}
               className="mx-auto mt-3 flex w-fit gap-2 will-change-animate"
             >
               <SanityButtons
@@ -127,14 +182,14 @@ export default function SplitFeatureSection({
                 className={cn(
                   cleanCTALayout === "column" &&
                     "flex flex-col items-center justify-center gap-2 sm:flex-col",
-                  cleanCTALayout === "row" && "flex flex-row gap-2 sm:flex-row"
+                  cleanCTALayout === "row" && "flex flex-row gap-2 sm:flex-row",
                 )}
               />
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
 
-        <div
+        <motion.div
           className="order-(--order-mobile) h-full will-change-animate md:order-(--order-desktop)"
           style={
             {
@@ -142,10 +197,11 @@ export default function SplitFeatureSection({
               "--order-desktop": cleanDesktopLayoutDirection === "row" ? 2 : 1,
             } as React.CSSProperties
           }
+          variants={imageVariant}
         >
           <SplitFeatureSectionImage image={image} imageFill={cleanImageFill} />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
@@ -154,20 +210,16 @@ function SplitFeatureSectionImage({
   image,
   imageFill = "cover",
 }: SplitFeatureSectionImageProps) {
-  if (!image?.id) {
-    return null;
-  }
-
-  const className = cn(
-    "h-auto max-h-[731px] w-full",
-    imageFill === "contain" && "object-contain",
-    imageFill === "cover" && "object-cover"
-  );
+  if (!image?.id) return null;
 
   return (
     <SanityImage
       alt={image.alt || ""}
-      className={className}
+      className={cn(
+        "h-auto max-h-[731px] w-full",
+        imageFill === "contain" && "object-contain",
+        imageFill === "cover" && "object-cover",
+      )}
       height={731}
       image={image}
       width={583}

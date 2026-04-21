@@ -30,9 +30,9 @@ export async function Footer() {
           </div>
           <div className="w-full lg:col-start-3 lg:col-span-2 xl:col-start-4 xl:col-span-2">
             <h3 className="mb-4 text-accent">{footerData.newsletter?.title}</h3>
-            <div className="flex gap-2">
+            <div className="flex gap-1">
               <Input
-                className="border-accent bg-background placeholder:text-accent"
+                className="bg-white border-none placeholder:text-accent"
                 placeholder={
                   footerData?.newsletter?.inputPlaceholder ??
                   "Enter your email address"
@@ -41,7 +41,7 @@ export async function Footer() {
               />
 
               <Button
-                className="whitespace-nowrap border-accent bg-transparent text-accent hover:bg-foreground/5 hover:text-foreground"
+                className="whitespace-nowrap bg-white border-none text-accent hover:bg-foreground/5 hover:text-foreground"
                 variant="outline"
               >
                 {footerData?.newsletter?.buttonText ?? "Subscribe"}
