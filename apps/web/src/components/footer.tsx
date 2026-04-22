@@ -19,20 +19,20 @@ export async function Footer() {
     <footer className="mt-56 bg-muted">
       <div className="container mx-auto px-6 py-12">
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          <div className="space-y-1 font-medium text-accent text-base leading-[25px]">
+          <div className="space-y-1 font-medium text-accent text-base leading-6">
             <p>Tel: {footerData.contactInfo?.phone}</p>
             <p>{footerData.contactInfo?.addressLine1}</p>
             <p>{footerData.contactInfo?.addressLine2}</p>
           </div>
 
-          <div className="font-medium text-accent text-base leading-[25px]">
+          <div className="font-medium text-accent text-base leading-6">
             <p>{footerData.contactInfo?.email}</p>
           </div>
           <div className="w-full lg:col-start-3 lg:col-span-2 xl:col-start-4 xl:col-span-2">
-            <h3 className="mb-4 text-accent">{footerData.newsletter?.title}</h3>
+            <h3 className="mb-2 text-accent">{footerData.newsletter?.title}</h3>
             <div className="flex gap-1">
               <Input
-                className="bg-white border-none placeholder:text-accent"
+                className="bg-white border-none h-10 placeholder:text-accent"
                 placeholder={
                   footerData?.newsletter?.inputPlaceholder ??
                   "Enter your email address"
@@ -41,7 +41,7 @@ export async function Footer() {
               />
 
               <Button
-                className="whitespace-nowrap bg-white border-none text-accent hover:bg-foreground/5 hover:text-foreground"
+                className="whitespace-nowrap bg-white border-none h-10 text-accent hover:bg-foreground/5 hover:text-foreground"
                 variant="outline"
               >
                 {footerData?.newsletter?.buttonText ?? "Subscribe"}
@@ -53,7 +53,7 @@ export async function Footer() {
                 id="privacy"
               />
               <label
-                className="cursor-pointer text-accent text-sm"
+                className="cursor-pointer text-accent text-base"
                 htmlFor="privacy"
               >
                 {footerData?.newsletter?.privacyText ?? "I agree"}
@@ -67,16 +67,16 @@ export async function Footer() {
             <div key={column._key}>
               {column?.sections?.map((section, sectionIndex) => (
                 <div
-                  className={sectionIndex > 0 ? "mt-8" : ""}
+                  className={sectionIndex > 0 ? "mt-6" : ""}
                   key={section._key}
                 >
-                  <h3 className="mb-4 break-words border-t border-t-accent pt-4 font-medium text-base text-foreground leading-[31px]">
+                  <h3 className="mb-1 break-words border-t border-t-accent pt-4 font-medium text-base text-foreground leading-[31px]">
                     {section.title}
                   </h3>
                   {!section.isStandalone &&
                     section.links &&
                     section.links.length > 0 && (
-                      <ul className="space-y-2">
+                      <ul>
                         {section.links.map((link) => (
                           <li key={link._key}>
                             <Link

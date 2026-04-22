@@ -153,7 +153,7 @@ export default function SplitFeatureSection({
           {headline && (
             <motion.p
               variants={item}
-              className="min-w-0 break-words text-center font-medium text-sm uppercase leading-[25px] will-change-animate lg:text-base"
+              className="min-w-0 break-words text-center font-medium text-sm uppercase leading-6 will-change-animate lg:text-base"
             >
               {headline}
             </motion.p>
@@ -161,14 +161,14 @@ export default function SplitFeatureSection({
 
           <motion.h2
             variants={item}
-            className="mx-auto min-w-0 max-w-[22ch] text-balance break-words text-center font-medium text-3xl leading-[48px] will-change-animate sm:text-2xl lg:text-4xl"
+            className="mx-auto min-w-0 max-w-[22ch] text-balance break-words text-center font-medium text-4xl leading-12 will-change-animate sm:text-2xl lg:text-4xl"
           >
             {title}
           </motion.h2>
 
           <motion.p
             variants={item}
-            className="mx-auto min-w-0 max-w-[47ch] break-words font-medium text-sm leading-[25px] will-change-animate lg:text-base"
+            className="mx-auto min-w-0 max-w-[47ch] break-words font-medium text-sm leading-6 will-change-animate lg:text-base"
           >
             {description}
           </motion.p>
@@ -179,7 +179,7 @@ export default function SplitFeatureSection({
               className="mx-auto mt-3 flex w-fit gap-2 will-change-animate"
             >
               <SanityButtons
-                buttonClassName="border-[#737373] px-6 text-[#737373] w-fit hover:bg-muted/50"
+                buttonClassName="border-[#737373] text-base px-6 text-[#737373] w-fit hover:bg-muted/50"
                 buttons={buttons}
                 className={cn(
                   cleanCTALayout === "column" &&
@@ -218,7 +218,7 @@ function SplitFeatureSectionImage({
     <SanityImage
       alt={image.alt || ""}
       className={cn(
-        "h-auto max-h-[731px] w-full",
+        "h-auto max-h-[730px] w-full",
         imageFill === "contain" && "object-contain",
         imageFill === "cover" && "object-cover",
       )}

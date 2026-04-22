@@ -66,7 +66,7 @@ export default function Hero({
                     className={buttonVariants({
                       variant: "link",
                       className:
-                        "!text-[#9C9C9D] group link-effect hover:!no-underline !px-0 relative w-fit font-medium text-base capitalize leading-[25px] hover:after:origin-left hover:after:scale-x-100",
+                        "!text-[#9C9C9D] group link-effect hover:!no-underline !px-0 relative w-fit font-medium text-base capitalize leading-6 hover:after:origin-left hover:after:scale-x-100",
                     })}
                     href={link.href}
                   >

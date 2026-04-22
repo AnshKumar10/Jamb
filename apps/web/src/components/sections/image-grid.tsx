@@ -114,7 +114,7 @@ export default function ImageGrid({
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true, amount: 0.3 }}
-            className="text-balance mb-8 text-center font-medium text-2xl capitalize leading-[25px]"
+            className="text-balance mb-8 text-center font-medium text-xl capitalize leading-6"
           >
             {cleanTitle}
           </motion.h3>
@@ -153,7 +153,7 @@ export default function ImageGrid({
                   {feature?.title && (
                     <h4
                       className={cn(
-                        "mt-2.5 w-full text-[#737373] min-w-0 break-words font-bold text-base leading-[25px]",
+                        "w-full text-[#737373] min-w-0 break-words font-bold text-base leading-6",
                         feature?.truncateTitle && "line-clamp-2",
                       )}
                     >
@@ -193,7 +193,7 @@ function DescriptionWithReadMore({
 
   if (cleanDescription.length <= maxLength) {
     return (
-      <p className="flex-1 text-[#737373] text-base leading-[25px]">
+      <p className="flex-1 text-[#737373] text-base leading-6">
         {cleanDescription}
       </p>
     );
@@ -204,7 +204,7 @@ function DescriptionWithReadMore({
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-1">
-      <p className="flex-1 text-base leading-[25px]">{displayText}</p>
+      <p className="flex-1 text-base leading-6">{displayText}</p>
 
       <Button
         className="underline underline-offset-4"
