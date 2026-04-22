@@ -27,7 +27,7 @@ export type FeatureImage = {
   media?: unknown; // Unable to locate the referenced type "image.media" in schema
   hotspot?: SanityImageHotspot;
   crop?: SanityImageCrop;
-  alt: string;
+  alt?: string;
   _type: "image";
 };
 
@@ -46,12 +46,12 @@ export type SplitFeatureSection = {
   description: string;
   backgroundColor: "transparent" | "#DFDAD7" | "custom";
   customBackgroundColor?: string;
-  image: {
+  image?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt: string;
+    alt?: string;
     _type: "image";
   };
   imageFill: "contain" | "cover";
@@ -78,7 +78,7 @@ export type ImageGrid = {
   backgroundColor: "transparent" | "#E3E3E3" | "custom";
   customBackgroundColor?: string;
   features: Array<{
-    image: FeatureImage;
+    image?: FeatureImage;
     imageFill: "contain" | "cover";
     title?: string;
     description?: string;
@@ -96,12 +96,12 @@ export type ImageGrid = {
 
 export type Hero = {
   _type: "hero";
-  image: {
+  image?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt: string;
+    alt?: string;
     _type: "image";
   };
   imageFill: "contain" | "cover";
@@ -682,7 +682,7 @@ export type QueryHomePageDataResult = {
             right: number;
             top: number;
           } | null;
-        };
+        } | null;
         imageFill: "contain" | "cover";
         spacingMode: "same" | "separate";
         spacing?: "2xl" | "3xl" | "4xl" | "lg" | "md" | "none" | "sm" | "xl";
@@ -717,8 +717,8 @@ export type QueryHomePageDataResult = {
               right: number;
               top: number;
             } | null;
-            alt: string;
-          };
+            alt: string | null;
+          } | null;
           imageFill: "contain" | "cover";
           title?: string;
           description?: string;
@@ -763,8 +763,8 @@ export type QueryHomePageDataResult = {
             right: number;
             top: number;
           } | null;
-          alt: string;
-        };
+          alt: string | null;
+        } | null;
         imageFill: "contain" | "cover";
         desktopLayoutDirection: "row-reverse" | "row";
         mobileLayoutDirection: "column-reverse" | "column";
@@ -838,7 +838,7 @@ export type QuerySlugPageDataResult = {
             right: number;
             top: number;
           } | null;
-        };
+        } | null;
         imageFill: "contain" | "cover";
         spacingMode: "same" | "separate";
         spacing?: "2xl" | "3xl" | "4xl" | "lg" | "md" | "none" | "sm" | "xl";
@@ -873,8 +873,8 @@ export type QuerySlugPageDataResult = {
               right: number;
               top: number;
             } | null;
-            alt: string;
-          };
+            alt: string | null;
+          } | null;
           imageFill: "contain" | "cover";
           title?: string;
           description?: string;
@@ -919,8 +919,8 @@ export type QuerySlugPageDataResult = {
             right: number;
             top: number;
           } | null;
-          alt: string;
-        };
+          alt: string | null;
+        } | null;
         imageFill: "contain" | "cover";
         desktopLayoutDirection: "row-reverse" | "row";
         mobileLayoutDirection: "column-reverse" | "column";

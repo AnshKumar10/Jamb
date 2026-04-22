@@ -1,7 +1,7 @@
 import { Sparkles } from "lucide-react";
 import { defineField, defineType } from "sanity";
 import { createRadioListLayout } from "@/utils/helper";
-import { spacingFields } from "@/schemaTypes/common";
+import { imageWithAltField, spacingFields } from "@/schemaTypes/common";
 
 const imageFillOptions = ["contain", "cover"];
 
@@ -14,28 +14,11 @@ export const hero = defineType({
     "Hero section featuring a prominent image with configurable layout and spacing controls",
 
   fields: [
-    defineField({
-      name: "image",
-      type: "image",
+    imageWithAltField({
       title: "Image",
       description:
         "Primary hero image used as the main visual focal point of the section",
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        defineField({
-          name: "alt",
-          type: "string",
-          title: "Alt Text",
-          description:
-            "Alternative text describing the image for accessibility and SEO purposes",
-          validation: (rule) => rule.required(),
-        }),
-      ],
-      validation: (rule) => rule.required(),
     }),
-
     defineField({
       name: "imageFill",
       type: "string",
@@ -50,7 +33,7 @@ export const hero = defineType({
     }),
 
     ...spacingFields(
-      "Adjust vertical spacing (top and bottom margins) for the hero section"
+      "Adjust vertical spacing (top and bottom margins) for the hero section",
     ),
   ],
 

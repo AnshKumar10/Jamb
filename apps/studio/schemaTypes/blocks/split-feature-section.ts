@@ -1,7 +1,11 @@
 import { PanelBottom } from "lucide-react";
 import { defineField, defineType } from "sanity";
 import { createRadioListLayout } from "@/utils/helper";
-import { buttonsField, spacingFields } from "@/schemaTypes/common";
+import {
+  buttonsField,
+  imageWithAltField,
+  spacingFields,
+} from "@/schemaTypes/common";
 
 const desktopLayoutOptions = ["row", "row-reverse"];
 const mobileLayoutOptions = ["column", "column-reverse"];
@@ -87,26 +91,10 @@ export const splitFeatureSection = defineType({
           return true;
         }),
     }),
-    defineField({
-      name: "image",
-      type: "image",
+    imageWithAltField({
       title: "Image",
       description:
         "The main image displayed in the split feature section section - should be high quality and visually impactful",
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        defineField({
-          name: "alt",
-          type: "string",
-          title: "Alt Text",
-          description:
-            "Alternative text for the image - important for accessibility and SEO",
-          validation: (rule) => rule.required(),
-        }),
-      ],
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "imageFill",

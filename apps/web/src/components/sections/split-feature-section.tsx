@@ -95,6 +95,8 @@ export default function SplitFeatureSection({
   bottomSpacing,
   navigationSlugField,
 }: SplitFeatureSectionProps) {
+
+  
   const cleanBackgroundColor = stegaClean(backgroundColor);
   const cleanDesktopLayoutDirection = stegaClean(desktopLayoutDirection);
   const cleanMobileLayoutDirection = stegaClean(mobileLayoutDirection);

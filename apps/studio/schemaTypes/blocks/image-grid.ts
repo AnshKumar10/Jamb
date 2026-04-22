@@ -1,7 +1,7 @@
 import { Grid3x3 } from "lucide-react";
 import { defineField, defineType } from "sanity";
 import { createRadioListLayout } from "@/utils/helper";
-import { spacingFields } from "@/schemaTypes/common";
+import { imageWithAltField, spacingFields } from "@/schemaTypes/common";
 
 const imageFillOptions = ["contain", "cover"];
 const MAX_DESCRIPTION_LENGHT = 500;
@@ -20,9 +20,7 @@ export const imageGrid = defineType({
   title: "Image Grid",
   description:
     "Grid layout section displaying a collection of image-based features with optional text and styling controls",
-
   icon: Grid3x3,
-
   fields: [
     defineField({
       name: "title",
@@ -31,7 +29,6 @@ export const imageGrid = defineType({
       description:
         "Main heading for the image grid section, used to introduce the content",
     }),
-
     defineField({
       name: "backgroundColor",
       type: "string",
@@ -44,7 +41,6 @@ export const imageGrid = defineType({
       }),
       validation: (rule) => rule.required(),
     }),
-
     defineField({
       name: "customBackgroundColor",
       type: "string",
@@ -65,7 +61,6 @@ export const imageGrid = defineType({
           return true;
         }),
     }),
-
     defineField({
       name: "features",
       type: "array",
@@ -78,28 +73,11 @@ export const imageGrid = defineType({
           name: "feature",
           title: "Feature",
           fields: [
-            defineField({
-              name: "image",
-              type: "image",
+            imageWithAltField({
               title: "Image",
               description:
                 "Visual asset representing this feature item in the grid",
-              options: {
-                hotspot: true,
-              },
-              fields: [
-                defineField({
-                  name: "alt",
-                  type: "string",
-                  title: "Alt Text",
-                  description:
-                    "Descriptive text for accessibility and SEO purposes",
-                  validation: (rule) => rule.required(),
-                }),
-              ],
-              validation: (rule) => rule.required(),
             }),
-
             defineField({
               name: "imageFill",
               type: "string",
@@ -112,7 +90,6 @@ export const imageGrid = defineType({
               }),
               validation: (rule) => rule.required(),
             }),
-
             defineField({
               name: "title",
               type: "string",
@@ -120,7 +97,6 @@ export const imageGrid = defineType({
               description:
                 "Heading text for this feature item displayed under the image",
             }),
-
             defineField({
               name: "description",
               type: "text",
@@ -129,7 +105,6 @@ export const imageGrid = defineType({
                 "Supporting text describing the feature in more detail",
               rows: 3,
             }),
-
             defineField({
               name: "truncateTitle",
               type: "boolean",
@@ -139,7 +114,6 @@ export const imageGrid = defineType({
               initialValue: false,
             }),
           ],
-
           preview: {
             select: {
               title: "title",
@@ -155,7 +129,6 @@ export const imageGrid = defineType({
 
       validation: (rule) => rule.required().min(1),
     }),
-
     defineField({
       name: "maxDescriptionLength",
       type: "number",
@@ -173,7 +146,6 @@ export const imageGrid = defineType({
     ...spacingFields(
       "Adjust vertical spacing (top and bottom margins) of the image grid section",
     ),
-
     defineField({
       name: "allowNavigation",
       type: "boolean",
